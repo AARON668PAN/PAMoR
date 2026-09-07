@@ -12,7 +12,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       <header className="mx-auto max-w-5xl px-5 pb-12 pt-16 text-center sm:pt-24">
-        <p className="mb-5 text-sm font-medium text-slate-500">arXiv 2026</p>
         <h1 className="text-balance text-4xl font-semibold leading-[1.12] tracking-[-0.045em] sm:text-6xl">
           PAMoR: Parameterized Affective Motion Generation in Real Time for Humanoid Robots
         </h1>

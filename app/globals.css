@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.3);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.19 0.02 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.02 255);
+  --primary: oklch(0.27 0.025 255);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.97 0.006 250);
+  --secondary-foreground: oklch(0.27 0.025 255);
+  --muted: oklch(0.97 0.006 250);
+  --muted-foreground: oklch(0.51 0.02 255);
+  --accent: oklch(0.95 0.02 250);
+  --accent-foreground: oklch(0.27 0.025 255);
+  --border: oklch(0.91 0.012 250);
+  --input: oklch(0.91 0.012 250);
+  --ring: oklch(0.62 0.19 255);
+  --radius: 0.55rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  }
+
+  ::selection {
+    @apply bg-blue-100 text-slate-950;
+  }
+}
+
+@layer components {
+  .paper-section {
+    @apply mx-auto max-w-4xl px-5 py-14 text-left sm:py-20;
+  }
+
+  .wide-section {
+    @apply max-w-6xl;
+  }
+
+  .paper-section h2 {
+    @apply text-center text-3xl font-semibold tracking-[-0.035em] sm:text-4xl;
+  }
+
+  .paper-section > p {
+    @apply mt-5 text-[17px] leading-8 text-slate-700;
+  }
+
+  .paper-section h3 {
+    @apply text-lg font-semibold tracking-[-0.02em] text-slate-900;
+  }
+
+  .paper-section h3 + p {
+    @apply mt-3 text-[16px] leading-7 text-slate-600;
+  }
+}

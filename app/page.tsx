@@ -65,7 +65,7 @@ export default function Home() {
             />
           </picture>
           <figcaption className="mx-auto mt-5 max-w-4xl text-center text-sm leading-6 text-slate-500">
-            Overview of the V–A-conditioned composable latent diffusion framework. The system processes motion data, computes V–A labels from robot kinematics, composes three conditional priors, and deploys generated motion on the Unitree G1.
+            Overview of the V–A-conditioned composable latent diffusion framework. Data processing (top left): motions are retargeted to the Unitree G1 or teleoperated on it directly, and a continuous V–A label is computed in closed form from body kinematics. Model framework (bottom): a text prompt and a valence–arousal pair each condition a separate denoising prior sharing a frozen MVAE latent space, composed at every denoising step. Real-world deployment (top right): the same action performed across the affect plane on a real G1.
           </figcaption>
         </figure>
       </div>
@@ -73,13 +73,7 @@ export default function Home() {
       <section className="paper-section" id="abstract">
         <h2>Abstract</h2>
         <p>
-          People read a humanoid robot’s motion in social settings not only for the action performed but for the affect conveyed. PAMoR turns affect into a measured control parameter: a valence–arousal coordinate computed natively on robot kinematics.
-        </p>
-        <p>
-          The coordinate is obtained in closed form from postural expansion and movement energy, with no human annotation. An action prior and two affect priors are trained in a shared latent space and composed at each denoising step: the action prior fixes what is performed, while the affect priors modulate how it is performed.
-        </p>
-        <p>
-          Whole-body motion rolls out autoregressively on a 29-DoF Unitree G1 in real time, with action and affect both editable. Generated motion tracks the commanded V–A range while maintaining text-to-motion fidelity.
+          People read a humanoid robot’s motion in social settings not only for the action performed but for the affect conveyed. Motion carrying that affect has so far been generated for human avatars, where style is taken from a reference clip or an emotion word, neither of which can be quantitatively parameterized. We present PAMoR, which turns affect into a measured control parameter: a valence–arousal (V–A) coordinate computed natively on robot kinematics. It is obtained in closed form from postural expansion and movement energy, and these measurements serve directly as generation conditions, with no human annotation. An action prior and two affect priors, trained in a shared latent space, are composed at each denoising step: the action prior fixes what is performed, the affect priors modulate how. Whole-body motion rolls out autoregressively on a 29-DoF Unitree G1 in real time, with action and affect both editable. Generated motion tracks the commanded V–A over its full range while text-to-motion fidelity still matches text-only baselines. In a perceptual study, raters identify the commanded emotion on 0.38 of trials, above both baselines and approaching the 0.44 reported for acted human bodies.
         </p>
       </section>
 
@@ -87,16 +81,16 @@ export default function Home() {
         <h2>Framework</h2>
         <div className="mt-8 grid gap-8 text-left md:grid-cols-3">
           <div>
-            <h3>Robot-native V–A labeling</h3>
-            <p>Valence is computed from postural expansion; arousal is computed from movement energy. Both are measured directly on the robot’s kinematics.</p>
+            <h3>V–A Labeling</h3>
+            <p>Valence and arousal are computed rather than annotated. Both are evaluated in closed form on the 14 body keypoints obtained by forward kinematics, taking posture for valence and movement energy for arousal. This labels the entire training corpus at no annotation cost.</p>
           </div>
           <div>
-            <h3>Composable latent diffusion</h3>
-            <p>Separate text, valence, and arousal priors share one motion latent space and are composed during sampling.</p>
+            <h3>Composable Latent Diffusion</h3>
+            <p>Three priors share a frozen motion latent space and are composed at sampling time. The action prior learns the action the text specifies; the affect priors learn how the V–A conditions change motion style.</p>
           </div>
           <div>
-            <h3>Real-time rollout</h3>
-            <p>The generated primitive is decoded, executed through a motion tracker, and fed back as history for continuous, editable motion.</p>
+            <h3>Autoregressive Rollout</h3>
+            <p>The decoder turns each clean latent into the next motion primitive, which a motion tracker executes on the robot and which feeds back as history for the following step.</p>
           </div>
         </div>
       </section>

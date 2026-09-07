@@ -58,11 +58,16 @@ export default function Home() {
 
       <div className="mx-auto max-w-6xl px-5">
         <figure className="border-y border-slate-200 py-8 sm:py-12">
-          <img
-            className="mx-auto h-auto w-full"
-            src={`${assetBase}/framework.png`}
-            alt="Overview of the PAMoR data processing, valence-arousal labeling, composable latent diffusion model, and real-world robot deployment"
-          />
+          <picture>
+            <source srcSet={`${assetBase}/framework.webp`} type="image/webp" />
+            <img
+              className="mx-auto h-auto w-full"
+              src={`${assetBase}/framework.png`}
+              width={2281}
+              height={1154}
+              alt="Overview of the PAMoR data processing, valence-arousal labeling, composable latent diffusion model, and real-world robot deployment"
+            />
+          </picture>
           <figcaption className="mx-auto mt-5 max-w-4xl text-center text-sm leading-6 text-slate-500">
             Overview of the V–A-conditioned composable latent diffusion framework. The system processes motion data, computes V–A labels from robot kinematics, composes three conditional priors, and deploys generated motion on the Unitree G1.
           </figcaption>

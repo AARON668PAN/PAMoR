@@ -49,7 +49,7 @@ jobs:
           touch dist/client/.nojekyll
           # 校验：index.html 存在，且它引用的每个本地资源都真的落了盘
           test -f dist/client/index.html
-          grep -oE '(src|href|poster)="/PAMoR/[^"]*"' dist/client/index.html \
+          grep -oiE '(src|srcset|href|poster)="/PAMoR/[^"]*"' dist/client/index.html \
             | sed -E 's|.*="/PAMoR/([^"]*)"|\1|' | sort -u \
             | while read -r f; do
                 test -e "dist/client/$f" || { echo "MISSING: $f"; exit 1; }

@@ -33,24 +33,32 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Project Pages serve from /<repo>/, so the base path has to track the
+      # repository name — renaming the repo otherwise breaks every asset URL.
+      - name: Resolve base path
+        id: base
+        run: echo "name=${GITHUB_REPOSITORY#*/}" >> "$GITHUB_OUTPUT"
+
       - name: Build static site
         run: npm run build:pages
         env:
           GITHUB_PAGES: 'true'
-          NEXT_PUBLIC_BASE_PATH: /PAMoR
+          NEXT_PUBLIC_BASE_PATH: /${{ steps.base.outputs.name }}
 
       - name: Prepare Pages output
+        env:
+          REPO: ${{ steps.base.outputs.name }}
         run: |
-          # assetPrefix 让 vinext 把资源写进 dist/client/PAMoR/_next，
-          # 但 HTML 引用的是 /PAMoR/_next —— 而 /PAMoR/ 正是 Pages 的站点根，
-          # 所以要把这层重复目录合并掉。
-          mv dist/client/PAMoR/_next dist/client/_next
-          rmdir dist/client/PAMoR
+          # assetPrefix makes vinext write assets to dist/client/<repo>/_next
+          # while the HTML references /<repo>/_next — and /<repo>/ is already
+          # the Pages site root, so that duplicated level has to be collapsed.
+          mv "dist/client/$REPO/_next" dist/client/_next
+          rmdir "dist/client/$REPO"
           touch dist/client/.nojekyll
-          # 校验：index.html 存在，且它引用的每个本地资源都真的落了盘
+          # Check index.html exists and every local asset it references landed.
           test -f dist/client/index.html
-          grep -oiE '(src|srcset|href|poster)="/PAMoR/[^"]*"' dist/client/index.html \
-            | sed -E 's|.*="/PAMoR/([^"]*)"|\1|' | sort -u \
+          grep -oiE "(src|srcset|href|poster)=\"/$REPO/[^\"]*\"" dist/client/index.html \
+            | sed -E "s|.*=\"/$REPO/([^\"]*)\"|\1|" | sort -u \
             | while read -r f; do
                 test -e "dist/client/$f" || { echo "MISSING: $f"; exit 1; }
               done

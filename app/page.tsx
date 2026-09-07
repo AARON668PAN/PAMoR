@@ -2,8 +2,6 @@ import { Braces, FileText, PlayCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const paperUrl = 'https://arxiv.org/html/2608.28213v1';
-const pdfUrl = 'https://arxiv.org/pdf/2608.28213';
-const codeUrl = 'https://github.com/AARON668PAN/PAMoR';
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 export const dynamic = 'force-static';
@@ -32,14 +30,13 @@ export default function Home() {
             nativeButton={false}
             className="h-11 rounded-md bg-slate-800 px-5 text-white hover:bg-slate-700"
           >
-            <FileText className="size-4" aria-hidden="true" /> Paper
+            <FileText className="size-4" aria-hidden="true" /> arXiv
           </Button>
           <Button
-            render={<a href={codeUrl} target="_blank" rel="noreferrer" />}
-            nativeButton={false}
-            className="h-11 rounded-md bg-slate-800 px-5 text-white hover:bg-slate-700"
+            disabled
+            className="h-11 cursor-not-allowed rounded-md border-slate-200 bg-slate-100 px-5 text-slate-400 disabled:opacity-100"
           >
-            <Braces className="size-4" aria-hidden="true" /> Code
+            <Braces className="size-4" aria-hidden="true" /> Code (coming soon)
           </Button>
           <Button
             render={<a href="#video" />}
@@ -133,11 +130,6 @@ export default function Home() {
   year    = {2026}
 }`}</code>
         </pre>
-        <p className="mt-6 text-center">
-          <a className="font-medium text-blue-600 hover:underline" href={pdfUrl} target="_blank" rel="noreferrer">
-            Download the paper as PDF
-          </a>
-        </p>
       </section>
 
       <footer className="mt-8 border-t border-slate-200 py-8 text-center text-sm text-slate-500">

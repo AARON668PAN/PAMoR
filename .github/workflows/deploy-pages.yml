@@ -34,10 +34,26 @@ jobs:
         run: npm ci
 
       - name: Build static site
-        run: npm run build
+        run: npm run build:pages
         env:
           GITHUB_PAGES: 'true'
           NEXT_PUBLIC_BASE_PATH: /PAMoR
+
+      - name: Prepare Pages output
+        run: |
+          # assetPrefix 让 vinext 把资源写进 dist/client/PAMoR/_next，
+          # 但 HTML 引用的是 /PAMoR/_next —— 而 /PAMoR/ 正是 Pages 的站点根，
+          # 所以要把这层重复目录合并掉。
+          mv dist/client/PAMoR/_next dist/client/_next
+          rmdir dist/client/PAMoR
+          touch dist/client/.nojekyll
+          # 校验：index.html 存在，且它引用的每个本地资源都真的落了盘
+          test -f dist/client/index.html
+          grep -oE '(src|href|poster)="/PAMoR/[^"]*"' dist/client/index.html \
+            | sed -E 's|.*="/PAMoR/([^"]*)"|\1|' | sort -u \
+            | while read -r f; do
+                test -e "dist/client/$f" || { echo "MISSING: $f"; exit 1; }
+              done
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

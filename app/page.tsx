@@ -52,8 +52,33 @@ export default function Home() {
         </p>
       </header>
 
-      <div className="mx-auto max-w-6xl px-5">
-        <figure className="border-y border-slate-200 py-8 sm:py-12">
+      {/* 无标题：视频作为 hero 的延伸紧跟其后，与 Abstract 的间距由后者自身的 padding 提供 */}
+      <section className="mx-auto max-w-6xl px-5 pt-2 sm:pt-4" id="video" aria-label="Video">
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-black shadow-sm">
+          <video
+            className="aspect-[8/5] w-full bg-black object-contain"
+            controls
+            playsInline
+            preload="metadata"
+            poster={`${assetBase}/pamor-poster.jpg`}
+            aria-label="PAMoR narrated project video"
+          >
+            <source src={`${assetBase}/pamor-overview.mp4`} type="video/mp4" />
+            Your browser does not support embedded video.
+          </video>
+        </div>
+      </section>
+
+      <section className="paper-section" id="abstract">
+        <h2>Abstract</h2>
+        <p>
+          People read a humanoid robot’s motion in social settings not only for the action performed but for the affect conveyed. Motion carrying that affect has so far been generated for human avatars, where style is taken from a reference clip or an emotion word, neither of which can be quantitatively parameterized. We present PAMoR, which turns affect into a measured control parameter: a valence–arousal (V–A) coordinate computed natively on robot kinematics. It is obtained in closed form from postural expansion and movement energy, and these measurements serve directly as generation conditions, with no human annotation. An action prior and two affect priors, trained in a shared latent space, are composed at each denoising step: the action prior fixes what is performed, the affect priors modulate how. Whole-body motion rolls out autoregressively on a 29-DoF Unitree G1 in real time, with action and affect both editable. Generated motion tracks the commanded V–A over its full range while text-to-motion fidelity still matches text-only baselines. In a perceptual study, raters identify the commanded emotion on 0.38 of trials, above both baselines and approaching the 0.44 reported for acted human bodies.
+        </p>
+      </section>
+
+      <section className="paper-section wide-section" id="framework">
+        <h2>Framework</h2>
+        <figure className="mt-8">
           <picture>
             <source srcSet={`${assetBase}/framework.webp`} type="image/webp" />
             <img
@@ -68,18 +93,7 @@ export default function Home() {
             Overview of the V–A-conditioned composable latent diffusion framework. Data processing (top left): motions are retargeted to the Unitree G1 or teleoperated on it directly, and a continuous V–A label is computed in closed form from body kinematics. Model framework (bottom): a text prompt and a valence–arousal pair each condition a separate denoising prior sharing a frozen MVAE latent space, composed at every denoising step. Real-world deployment (top right): the same action performed across the affect plane on a real G1.
           </figcaption>
         </figure>
-      </div>
-
-      <section className="paper-section" id="abstract">
-        <h2>Abstract</h2>
-        <p>
-          People read a humanoid robot’s motion in social settings not only for the action performed but for the affect conveyed. Motion carrying that affect has so far been generated for human avatars, where style is taken from a reference clip or an emotion word, neither of which can be quantitatively parameterized. We present PAMoR, which turns affect into a measured control parameter: a valence–arousal (V–A) coordinate computed natively on robot kinematics. It is obtained in closed form from postural expansion and movement energy, and these measurements serve directly as generation conditions, with no human annotation. An action prior and two affect priors, trained in a shared latent space, are composed at each denoising step: the action prior fixes what is performed, the affect priors modulate how. Whole-body motion rolls out autoregressively on a 29-DoF Unitree G1 in real time, with action and affect both editable. Generated motion tracks the commanded V–A over its full range while text-to-motion fidelity still matches text-only baselines. In a perceptual study, raters identify the commanded emotion on 0.38 of trials, above both baselines and approaching the 0.44 reported for acted human bodies.
-        </p>
-      </section>
-
-      <section className="paper-section wide-section" id="framework">
-        <h2>Framework</h2>
-        <div className="mt-8 grid gap-8 text-left md:grid-cols-3">
+        <div className="mt-12 grid gap-8 text-left md:grid-cols-3">
           <div>
             <h3>V–A Labeling</h3>
             <p>Valence and arousal are computed rather than annotated. Both are evaluated in closed form on the 14 body keypoints obtained by forward kinematics, taking posture for valence and movement energy for arousal. This labels the entire training corpus at no annotation cost.</p>
@@ -92,23 +106,6 @@ export default function Home() {
             <h3>Autoregressive Rollout</h3>
             <p>The decoder turns each clean latent into the next motion primitive, which a motion tracker executes on the robot and which feeds back as history for the following step.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="paper-section wide-section" id="video">
-        <h2>Video</h2>
-        <div className="mt-8 overflow-hidden rounded-lg border border-slate-200 bg-black shadow-sm">
-          <video
-            className="aspect-[8/5] w-full bg-black object-contain"
-            controls
-            playsInline
-            preload="metadata"
-            poster={`${assetBase}/pamor-poster.jpg`}
-            aria-label="PAMoR narrated project video"
-          >
-            <source src={`${assetBase}/pamor-overview.mp4`} type="video/mp4" />
-            Your browser does not support embedded video.
-          </video>
         </div>
       </section>
 

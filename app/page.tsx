@@ -2,6 +2,7 @@ import { Braces, FileText, PlayCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const paperUrl = 'https://arxiv.org/html/2608.28213v1';
+const labUrl = 'https://ucl-humanoid.github.io/';
 const assetBase = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 export const dynamic = 'force-static';
@@ -21,6 +22,10 @@ export default function Home() {
           <a className="hover:underline" href="mailto:chengxu.zhou@ucl.ac.uk">Chengxu Zhou</a>
         </p>
         <p className="mt-3 text-base text-slate-500">
+          <a className="text-blue-600 hover:underline" href={labUrl} target="_blank" rel="noreferrer">
+            UCL Humanoid Robotics Lab
+          </a>
+          <span className="mx-2 text-slate-300">·</span>
           Department of Computer Science, University College London
         </p>
 
@@ -124,7 +129,13 @@ export default function Home() {
       </section>
 
       <footer className="mt-8 border-t border-slate-200 py-8 text-center text-sm text-slate-500">
-        <p>PAMoR · University College London · 2026</p>
+        <p>
+          PAMoR ·{' '}
+          <a className="hover:underline" href={labUrl} target="_blank" rel="noreferrer">
+            UCL Humanoid Robotics Lab
+          </a>{' '}
+          · University College London · 2026
+        </p>
       </footer>
     </main>
   );

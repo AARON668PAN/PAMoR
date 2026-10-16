@@ -3,7 +3,7 @@
 Project page for **PAMoR: Parameterized Affective Motion Generation in Real Time for Humanoid Robots**.
 
 - Paper: https://arxiv.org/abs/2608.28213
-- Website: https://aaron668pan.github.io/PAMoR_web_page/
+- Website: https://aaron668pan.github.io/PAMoR/
 
 Built with [vinext](https://www.npmjs.com/package/vinext) (Next.js App Router on Vite) and deployed to GitHub Pages from `main` by `.github/workflows/deploy-pages.yml`.
 
